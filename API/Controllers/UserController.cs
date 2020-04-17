@@ -4,6 +4,7 @@ using Models.MoldelUser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -15,31 +16,63 @@ namespace API.Controllers
         [HttpPost("addUser")]
         public IActionResult addUser([FromBody] User user) {
 
+            try
+            {
+                int ResultAdd = UserBSS.AddUser(user);
+                if(ResultAdd == 1)
+                    return Ok("User add");
+                else
+                    return Ok("User active");
 
-
-            return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
-        [HttpPost("RemoveUser")]
-        public IActionResult RemoveUser()
+        [HttpGet("GetUser")]
+        public IActionResult GetUser([FromQuery] int IdUser)
         {
-
-            return Ok();
+            try 
+            {
+                return Ok(UserBSS.GetUser(IdUser));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
+
 
         [HttpPut("UpdateUser")]
-        public IActionResult UpdateUser()
+        public IActionResult UpdateUser([FromBody] User user)
         {
-
-            return Ok();
+            try
+            {
+                UserBSS.UpdateUser(user);
+                return Ok("User updated");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
         [HttpDelete("DeleteUser")]
-        public IActionResult DeleteUser()
+        public IActionResult DeleteUser([FromQuery] int IdUser)
         {
-
-            return Ok();
+            try
+            {
+                UserBSS.RemoveUser(IdUser);
+                return Ok("User removed");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
 
 
 
     }
 }
+ 

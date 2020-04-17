@@ -1,4 +1,5 @@
 ﻿using Models.MoldelUser;
+using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +8,27 @@ namespace Business
 {
     public static class UserBSS
     {
-        public static List<User> AddUser() {
-            List<User> listUsers = new List<User>();
-            listUsers.Add(new User { Name = "Barreto"});
-            listUsers.Add(new User { Name = "Ivanzin" });
-            listUsers.Add(new User { Name = "Ariane" });
 
-            return listUsers.OrderBy( x => x.Name).ToList();
+        public static int AddUser(User user)
+        {
 
+            return UserDD.AddUser(user);
+        }
+
+        public static User GetUser(int IdUser) {
+
+            return UserDD.GetUser(IdUser);
+        }
+
+        public static void RemoveUser(int IdUser)
+        {
+
+            UserDD.RemoveUser(IdUser);
+        }
+        public static void UpdateUser(User user)
+        {
+
+             UserDD.UpdateUser(user);
         }
     }
 }

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Models.MoldelUser
+namespace Models.ModelMetric
 {
-    public class User
+    public class Metric
     {
         public string Name { get; set; }
+
     }
 }

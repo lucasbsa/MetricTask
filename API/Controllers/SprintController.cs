@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business;
+using Microsoft.AspNetCore.Mvc;
+using Models.ModelSprint;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,40 +13,61 @@ namespace API.Controllers
     public class SprintController : Controller
     {
         [HttpPost("addSprint")]
-        public IActionResult addTask()
+        public IActionResult addSprint([FromBody] Sprint sprint)
         {
-            return Ok();
+            try
+            {
+                SprintBSS.addSprint(sprint);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
-        [HttpPost("RemoveSprint")]
-        public IActionResult RemoveTask()
+        [HttpDelete("RemoveSprint")]
+        public IActionResult RemoveSprint([FromQuery] int IdSprint)
         {
-
-            return Ok();
+            try
+            {
+                SprintBSS.RemoveSprint(IdSprint);
+                return Ok("Sprint removed");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
 
         [HttpPut("UpdateSprint")]
-        public IActionResult UpdateUser()
+        public IActionResult UpdateSprint([FromBody] Sprint sprint)
         {
-            return Ok();
+            try
+            {
+                SprintBSS.UpdateSprint(sprint);
+                return Ok("sprint updated");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
-        [HttpDelete("DeleteSprint")]
-        public IActionResult DeleteTask()
-        {
-            return Ok();
-        }
+        
 
         [HttpPost("RemoveUserSprint")]
-        public IActionResult RemoveUser()
+        public IActionResult RemoveUserSprint([FromQuery] int IdSprint, [FromQuery] int IdUser)
         {
 
-            return Ok();
+            try
+            {
+                SprintBSS.RemoveUserSprint(IdSprint,IdUser);
+                return Ok("User removed");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
-        [HttpPost("AddSprint")]
-        public IActionResult AddUser()
-        {
-
-            return Ok();
-        }
-
+       
     }
 }

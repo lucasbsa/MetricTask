@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business;
+using Microsoft.AspNetCore.Mvc;
+using Models.ModelBoard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,45 +13,73 @@ namespace API.Controllers
     public class BoardController : Controller
     {
         [HttpPost("addBoard")]
-        public IActionResult addBoard()
+        public IActionResult addBoard([FromBody] Board board)
         {
-            return Ok();
-        }
-        [HttpPost("RemoveBoard")]
-        public IActionResult RemoveBoard()
-        {
+            try
+            {
+                BoardBSS.AddBoard(board);
+                return Ok("Board created.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
 
-            return Ok();
         }
+   
 
         [HttpPut("UpdateBoard")]
-        public IActionResult UpdateBoard()
+        public IActionResult UpdateBoard([FromBody] Board board)
         {
-            return Ok();
-        }
-        [HttpDelete("DeleteBoard")]
-        public IActionResult DeleteBoard()
-        {
-            return Ok();
+            try
+            {
+                BoardBSS.UpdateBoard(board);
+                return Ok("Board updated.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
 
         [HttpPost("RemoveUserBoard")]
-        public IActionResult RemoveUserBoard()
+        public IActionResult RemoveUserBoard([FromQuery] int IdBoard, [FromQuery] int IdUser)
         {
-
-            return Ok();
+            try
+            {
+                BoardBSS.RemoveUserBoard(IdBoard, IdUser);
+                return Ok("Board created.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
         [HttpPost("AddUserBoard")]
-        public IActionResult AddUserBoard()
+        public IActionResult AddUserBoard([FromQuery] int IdBoard, [FromQuery] int IdUser)
         {
-
-            return Ok();
+            try
+            {
+                BoardBSS.AddUserBoard(IdBoard, IdUser);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
         [HttpPost("AddSprintBoard")]
-        public IActionResult AddSprintBoard()
+        public IActionResult AddSprintBoard([FromQuery] int IdSprint, [FromQuery] int IdBoard)
         {
-
-            return Ok();
+            try 
+            {
+                BoardBSS.AddSprintBoard(IdSprint, IdBoard);
+                return Ok();
+            } 
+            catch (Exception ex) 
+            {
+                return StatusCode(500, ex);
+            }            
         }
     }
 }

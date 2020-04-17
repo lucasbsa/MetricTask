@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business;
+using Microsoft.AspNetCore.Mvc;
+using Models.ModelTask;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -12,39 +13,72 @@ namespace API.Controllers
     public class TaskController : Controller
     {
         [HttpPost("addTask")]
-        public IActionResult addTask()
+        public IActionResult addTask([FromBody] Task task)
         {
-            return Ok();
+            try
+            {
+                TaskBSS.addTask(task);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
-        [HttpPost("RemoveTask")]
-        public IActionResult RemoveTask()
+        [HttpDelete("DeleteTask")]
+        public IActionResult DeleteTask([FromQuery] int IdTask)
         {
 
-            return Ok();
+            try
+            {
+                TaskBSS.DeleteTask(IdTask);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
 
         [HttpPut("UpdateTask")]
-        public IActionResult UpdateUser()
+        public IActionResult UpdateTask([FromBody] Task task)
         {
-            return Ok();
+            try
+            {
+                TaskBSS.UpdateTask(task);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
-        [HttpDelete("DeleteTask")]
-        public IActionResult DeleteTask()
+ 
+        [HttpDelete("DeleteUserTask")]
+        public IActionResult DeleteUserTask([FromQuery] int IdTask, [FromQuery] int IdUser)
         {
-            return Ok();
-        }
-
-        [HttpPost("RemoveUserTask")]
-        public IActionResult RemoveUser()
-        {
-
-            return Ok();
+            try
+            {
+                TaskBSS.DeleteUserTask(IdTask, IdUser);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
         [HttpPost("AddUserTask")]
-        public IActionResult AddUser()
+        public IActionResult AddUserTask([FromQuery] int IdTask, [FromQuery] int IdUser)
         {
-
-            return Ok();
+            try
+            {
+                TaskBSS.AddUserTask(IdTask, IdUser);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
     }
 }
